@@ -1,0 +1,57 @@
+@model HomeownersAssociation.Models.ServiceRequest
+
+@{
+    ViewData["Title"] = "Cancel Service Request";
+}
+
+<div class="container mt-4">
+    <h1>Cancel Service Request</h1>
+
+    <div class="alert alert-warning">
+        <h4 class="alert-heading">Are you sure you want to cancel this service request?</h4>
+        <p>Once cancelled, the request will no longer be processed and you will need to submit a new request if needed.</p>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Request Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">ID</dt>
+                <dd class="col-sm-9">#@Model.Id</dd>
+
+                <dt class="col-sm-3">Title</dt>
+                <dd class="col-sm-9">@Model.Title</dd>
+
+                <dt class="col-sm-3">Category</dt>
+                <dd class="col-sm-9">@Model.Category.Name</dd>
+
+                <dt class="col-sm-3">Priority</dt>
+                <dd class="col-sm-9">
+                    @switch (Model.Priority)
+                    {
+                        case 1:
+                            <span class="badge bg-danger">High</span>
+                            break;
+                        case 2:
+                            <span class="badge bg-warning text-dark">Medium</span>
+                            break;
+                        default:
+                            <span class="badge bg-info text-dark">Low</span>
+                            break;
+                    }
+                </dd>
+
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9">@Model.Description</dd>
+            </dl>
+        </div>
+    </div>
+
+    <form asp-action="Cancel">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Confirm Cancellation" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+    </form>
+</div> 

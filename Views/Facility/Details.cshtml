@@ -1,0 +1,56 @@
+@model HomeownersAssociation.Models.Facility
+
+@{
+    ViewData["Title"] = "Facility Details";
+}
+
+<div class="container mt-4">
+    <h1>@Model.Name</h1>
+    
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Description</h5>
+                    <p class="card-text">@Model.Description</p>
+                    
+                    <hr />
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Features</h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Capacity:</strong> @Model.Capacity people</li>
+                                <li class="list-group-item"><strong>Rate:</strong> ₱@Model.RatePerHour.ToString("N2") per hour</li>
+                                <li class="list-group-item"><strong>Status:</strong> @(Model.IsActive ? "Available" : "Not Available")</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Maintenance Schedule</h5>
+                            <p>@(string.IsNullOrEmpty(Model.MaintenanceSchedule) ? "No scheduled maintenance" : Model.MaintenanceSchedule)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a asp-action="Reserve" asp-route-id="@Model.Id" class="btn btn-primary">Make a Reservation</a>
+                    <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Reservation Guidelines</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Reservations must be made at least 24 hours in advance</li>
+                        <li class="list-group-item">Maximum reservation duration is 4 hours</li>
+                        <li class="list-group-item">Please clean up after your event</li>
+                        <li class="list-group-item">Cancellations must be made at least 12 hours before the reservation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

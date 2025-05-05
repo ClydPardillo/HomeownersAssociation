@@ -1,31 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Clyd Pardillo\\Documents\\Kapoy nga Iskol\\3rd year\\Homeowners\\HomeownersAssociation\\HomeownersAssociation.csproj": {}
+    "C:\\Users\\Jumel Anthony\\OneDrive\\Documents\\JUMEL\\3RD YEAR\\second sem\\ELNET\\HomeownersAssociation\\HomeownersAssociation.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Clyd Pardillo\\Documents\\Kapoy nga Iskol\\3rd year\\Homeowners\\HomeownersAssociation\\HomeownersAssociation.csproj": {
+    "C:\\Users\\Jumel Anthony\\OneDrive\\Documents\\JUMEL\\3RD YEAR\\second sem\\ELNET\\HomeownersAssociation\\HomeownersAssociation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Clyd Pardillo\\Documents\\Kapoy nga Iskol\\3rd year\\Homeowners\\HomeownersAssociation\\HomeownersAssociation.csproj",
+        "projectUniqueName": "C:\\Users\\Jumel Anthony\\OneDrive\\Documents\\JUMEL\\3RD YEAR\\second sem\\ELNET\\HomeownersAssociation\\HomeownersAssociation.csproj",
         "projectName": "HomeownersAssociation",
-        "projectPath": "C:\\Users\\Clyd Pardillo\\Documents\\Kapoy nga Iskol\\3rd year\\Homeowners\\HomeownersAssociation\\HomeownersAssociation.csproj",
-        "packagesPath": "C:\\Users\\Clyd Pardillo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Clyd Pardillo\\Documents\\Kapoy nga Iskol\\3rd year\\Homeowners\\HomeownersAssociation\\obj\\",
+        "projectPath": "C:\\Users\\Jumel Anthony\\OneDrive\\Documents\\JUMEL\\3RD YEAR\\second sem\\ELNET\\HomeownersAssociation\\HomeownersAssociation.csproj",
+        "packagesPath": "C:\\Users\\Jumel Anthony\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Jumel Anthony\\OneDrive\\Documents\\JUMEL\\3RD YEAR\\second sem\\ELNET\\HomeownersAssociation\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Clyd Pardillo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Jumel Anthony\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -93,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.309/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.406/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

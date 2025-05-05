@@ -1,0 +1,83 @@
+@model HomeownersAssociation.Models.ServiceRequest
+
+@{
+    ViewData["Title"] = "Submit Service Request";
+}
+
+<div class="container mt-4">
+    <h1>Submit Service Request</h1>
+    <p class="lead">Fill in the form below to submit a new service request.</p>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        
+                        <div class="form-group mb-3">
+                            <label asp-for="CategoryId" class="control-label">Category</label>
+                            <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId">
+                                <option value="">-- Select Category --</option>
+                            </select>
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label asp-for="Title" class="control-label"></label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label asp-for="Description" class="control-label"></label>
+                            <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label asp-for="Priority" class="control-label"></label>
+                            <select asp-for="Priority" class="form-control">
+                                <option value="3">Low</option>
+                                <option value="2">Medium</option>
+                                <option value="1">High</option>
+                            </select>
+                            <span asp-validation-for="Priority" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="submit" value="Submit Request" class="btn btn-primary" />
+                            <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Request Guidelines</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong>Priority Levels:</strong>
+                            <ul>
+                                <li><strong>High:</strong> For urgent issues that affect safety or prevent normal use of your property</li>
+                                <li><strong>Medium:</strong> For important issues that should be addressed soon but are not emergencies</li>
+                                <li><strong>Low:</strong> For general improvements or minor issues</li>
+                            </ul>
+                        </li>
+                        <li class="list-group-item">Be as specific as possible in your description</li>
+                        <li class="list-group-item">Include relevant details like location, when the issue started, etc.</li>
+                        <li class="list-group-item">For emergencies like water leaks or electrical issues, please call the emergency hotline</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 

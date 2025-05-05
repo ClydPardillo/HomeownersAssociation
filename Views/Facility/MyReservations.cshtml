@@ -1,0 +1,143 @@
+@model IEnumerable<HomeownersAssociation.Models.FacilityReservation>
+
+@{
+    ViewData["Title"] = "My Reservations";
+}
+
+<div class="container mt-4">
+    <h1>My Facility Reservations</h1>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            @if (!Model.Any())
+            {
+                <div class="alert alert-info">
+                    <p>You don't have any facility reservations yet.</p>
+                    <a asp-action="Index" class="btn btn-primary">Browse Facilities</a>
+                </div>
+            }
+            else
+            {
+                <div class="card">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="upcoming-tab" data-bs-toggle="tab" data-bs-target="#upcoming" type="button" role="tab" aria-controls="upcoming" aria-selected="true">Upcoming</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="past-tab" data-bs-toggle="tab" data-bs-target="#past" type="button" role="tab" aria-controls="past" aria-selected="false">Past</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="cancelled-tab" data-bs-toggle="tab" data-bs-target="#cancelled" type="button" role="tab" aria-controls="cancelled" aria-selected="false">Cancelled</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="upcoming" role="tabpanel" aria-labelledby="upcoming-tab">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Facility</th>
+                                                <th>Date</th>
+                                                <th>Time</th>
+                                                <th>Purpose</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.Where(r => r.ReservationDate >= DateTime.Today && r.Status != "Cancelled"))
+                                            {
+                                                <tr>
+                                                    <td>@item.Facility.Name</td>
+                                                    <td>@item.ReservationDate.ToShortDateString()</td>
+                                                    <td>@item.StartTime.ToString(@"hh\:mm") - @item.EndTime.ToString(@"hh\:mm")</td>
+                                                    <td>@item.Purpose</td>
+                                                    <td>
+                                                        <span class="badge bg-@(item.Status == "Approved" ? "success" : "warning")">
+                                                            @item.Status
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        @if (item.Status != "Cancelled" && item.ReservationDate > DateTime.Today)
+                                                        {
+                                                            <a asp-action="CancelReservation" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Cancel</a>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="past" role="tabpanel" aria-labelledby="past-tab">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Facility</th>
+                                                <th>Date</th>
+                                                <th>Time</th>
+                                                <th>Purpose</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.Where(r => r.ReservationDate < DateTime.Today && r.Status != "Cancelled"))
+                                            {
+                                                <tr>
+                                                    <td>@item.Facility.Name</td>
+                                                    <td>@item.ReservationDate.ToShortDateString()</td>
+                                                    <td>@item.StartTime.ToString(@"hh\:mm") - @item.EndTime.ToString(@"hh\:mm")</td>
+                                                    <td>@item.Purpose</td>
+                                                    <td>
+                                                        <span class="badge bg-@(item.Status == "Approved" ? "success" : "warning")">
+                                                            @item.Status
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="cancelled" role="tabpanel" aria-labelledby="cancelled-tab">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Facility</th>
+                                                <th>Date</th>
+                                                <th>Time</th>
+                                                <th>Purpose</th>
+                                                <th>Cancelled Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.Where(r => r.Status == "Cancelled"))
+                                            {
+                                                <tr>
+                                                    <td>@item.Facility.Name</td>
+                                                    <td>@item.ReservationDate.ToShortDateString()</td>
+                                                    <td>@item.StartTime.ToString(@"hh\:mm") - @item.EndTime.ToString(@"hh\:mm")</td>
+                                                    <td>@item.Purpose</td>
+                                                    <td>@(item.Cancelled?.ToShortDateString() ?? "-")</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="Index" class="btn btn-primary">Browse Facilities</a>
+    </div>
+</div> 

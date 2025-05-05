@@ -1,0 +1,48 @@
+@model HomeownersAssociation.Models.FacilityReservation
+
+@{
+    ViewData["Title"] = "Cancel Reservation";
+}
+
+<div class="container mt-4">
+    <h1>Cancel Reservation</h1>
+
+    <div class="alert alert-warning">
+        <h4 class="alert-heading">Are you sure you want to cancel this reservation?</h4>
+        <p>Once cancelled, this reservation will be removed from the facility's schedule and you may not be able to reserve the same time slot if someone else books it.</p>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Reservation Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Facility</dt>
+                <dd class="col-sm-9">@Model.Facility.Name</dd>
+
+                <dt class="col-sm-3">Date</dt>
+                <dd class="col-sm-9">@Model.ReservationDate.ToShortDateString()</dd>
+
+                <dt class="col-sm-3">Time</dt>
+                <dd class="col-sm-9">@Model.StartTime.ToString(@"hh\:mm") - @Model.EndTime.ToString(@"hh\:mm")</dd>
+
+                <dt class="col-sm-3">Purpose</dt>
+                <dd class="col-sm-9">@Model.Purpose</dd>
+
+                <dt class="col-sm-3">Status</dt>
+                <dd class="col-sm-9">
+                    <span class="badge bg-@(Model.Status == "Approved" ? "success" : "warning")">
+                        @Model.Status
+                    </span>
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <form asp-action="CancelReservation">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Confirm Cancellation" class="btn btn-danger" />
+        <a asp-action="MyReservations" class="btn btn-outline-secondary">Back to My Reservations</a>
+    </form>
+</div> 
