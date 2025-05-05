@@ -1,0 +1,96 @@
+@model HomeownersAssociation.Models.ViewModels.FacilityReservationViewModel
+
+@{
+    ViewData["Title"] = "Reserve Facility";
+}
+
+<div class="container mt-4">
+    <h1>Reserve @Model.Facility.Name</h1>
+
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Reservation Details</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Reserve">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="FacilityId" />
+
+                        <div class="form-group mb-3">
+                            <label asp-for="ReservationDate" class="control-label"></label>
+                            <input asp-for="ReservationDate" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                            <span asp-validation-for="ReservationDate" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="StartTime" class="control-label"></label>
+                                    <input asp-for="StartTime" class="form-control" />
+                                    <span asp-validation-for="StartTime" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="EndTime" class="control-label"></label>
+                                    <input asp-for="EndTime" class="form-control" />
+                                    <span asp-validation-for="EndTime" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Purpose" class="control-label"></label>
+                            <textarea asp-for="Purpose" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="Purpose" class="text-danger"></span>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <strong>Note:</strong> The rate for this facility is ₱@Model.Facility.RatePerHour.ToString("N2") per hour.
+                        </div>
+
+                        <div class="form-group mt-4">
+                            <input type="submit" value="Submit Reservation" class="btn btn-primary" />
+                            <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Existing Reservations</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.ExistingReservations != null && Model.ExistingReservations.Any())
+                    {
+                        <div class="list-group">
+                            @foreach (var reservation in Model.ExistingReservations.OrderBy(r => r.ReservationDate).ThenBy(r => r.StartTime))
+                            {
+                                <div class="list-group-item">
+                                    <strong>@reservation.ReservationDate.ToShortDateString()</strong>
+                                    <br />
+                                    <small>
+                                        @reservation.StartTime.ToString(@"hh\:mm") - @reservation.EndTime.ToString(@"hh\:mm")
+                                        <span class="badge bg-@(reservation.Status == "Approved" ? "success" : "warning")">@reservation.Status</span>
+                                    </small>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No current reservations for this facility.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 

@@ -1,0 +1,191 @@
+@model IEnumerable<HomeownersAssociation.Models.ServiceRequest>
+
+@{
+    ViewData["Title"] = "My Service Requests";
+}
+
+<div class="container mt-4">
+    <h1>My Service Requests</h1>
+    <p class="lead">View and manage your service requests.</p>
+
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <a asp-action="Create" class="btn btn-primary">Submit New Request</a>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            <p>You haven't submitted any service requests yet.</p>
+        </div>
+    }
+    else
+    {
+        <div class="card">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="active-tab" data-bs-toggle="tab" data-bs-target="#active" type="button" role="tab" aria-controls="active" aria-selected="true">Active</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="completed-tab" data-bs-toggle="tab" data-bs-target="#completed" type="button" role="tab" aria-controls="completed" aria-selected="false">Completed</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="cancelled-tab" data-bs-toggle="tab" data-bs-target="#cancelled" type="button" role="tab" aria-controls="cancelled" aria-selected="false">Cancelled</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Category</th>
+                                        <th>Title</th>
+                                        <th>Priority</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Where(r => r.Status == "Pending" || r.Status == "InProgress"))
+                                    {
+                                        <tr>
+                                            <td>#@item.Id</td>
+                                            <td>@item.Category.Name</td>
+                                            <td>@item.Title</td>
+                                            <td>
+                                                @switch (item.Priority)
+                                                {
+                                                    case 1:
+                                                        <span class="badge bg-danger">High</span>
+                                                        break;
+                                                    case 2:
+                                                        <span class="badge bg-warning text-dark">Medium</span>
+                                                        break;
+                                                    default:
+                                                        <span class="badge bg-info text-dark">Low</span>
+                                                        break;
+                                                }
+                                            </td>
+                                            <td>
+                                                @switch (item.Status)
+                                                {
+                                                    case "InProgress":
+                                                        <span class="badge bg-primary">In Progress</span>
+                                                        break;
+                                                    default:
+                                                        <span class="badge bg-warning text-dark">Pending</span>
+                                                        break;
+                                                }
+                                            </td>
+                                            <td>
+                                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Details</a>
+                                                @if (item.Status == "Pending")
+                                                {
+                                                    <a asp-action="Cancel" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Cancel</a>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="completed" role="tabpanel" aria-labelledby="completed-tab">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Category</th>
+                                        <th>Title</th>
+                                        <th>Priority</th>
+                                        <th>Completed On</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Where(r => r.Status == "Completed"))
+                                    {
+                                        <tr>
+                                            <td>#@item.Id</td>
+                                            <td>@item.Category.Name</td>
+                                            <td>@item.Title</td>
+                                            <td>
+                                                @switch (item.Priority)
+                                                {
+                                                    case 1:
+                                                        <span class="badge bg-danger">High</span>
+                                                        break;
+                                                    case 2:
+                                                        <span class="badge bg-warning text-dark">Medium</span>
+                                                        break;
+                                                    default:
+                                                        <span class="badge bg-info text-dark">Low</span>
+                                                        break;
+                                                }
+                                            </td>
+                                            <td>@(item.CompletedAt?.ToString("MM/dd/yyyy") ?? "-")</td>
+                                            <td>
+                                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Details</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="cancelled" role="tabpanel" aria-labelledby="cancelled-tab">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Category</th>
+                                        <th>Title</th>
+                                        <th>Priority</th>
+                                        <th>Cancelled On</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Where(r => r.Status == "Cancelled"))
+                                    {
+                                        <tr>
+                                            <td>#@item.Id</td>
+                                            <td>@item.Category.Name</td>
+                                            <td>@item.Title</td>
+                                            <td>
+                                                @switch (item.Priority)
+                                                {
+                                                    case 1:
+                                                        <span class="badge bg-danger">High</span>
+                                                        break;
+                                                    case 2:
+                                                        <span class="badge bg-warning text-dark">Medium</span>
+                                                        break;
+                                                    default:
+                                                        <span class="badge bg-info text-dark">Low</span>
+                                                        break;
+                                                }
+                                            </td>
+                                            <td>@(item.Cancelled?.ToString("MM/dd/yyyy") ?? "-")</td>
+                                            <td>
+                                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Details</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div> 

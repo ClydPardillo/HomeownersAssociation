@@ -1,0 +1,38 @@
+@model IEnumerable<HomeownersAssociation.Models.Facility>
+
+@{
+    ViewData["Title"] = "Facilities";
+}
+
+<div class="container mt-4">
+    <h1>Community Facilities</h1>
+    <p class="lead">Browse and reserve community facilities for your events.</p>
+
+    <div class="row mt-4">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">@(item.Description?.Length > 100 ? item.Description.Substring(0, 100) + "..." : item.Description)</p>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                <strong>Capacity:</strong> @item.Capacity people<br />
+                                <strong>Rate:</strong> ₱@item.RatePerHour.ToString("N2") per hour
+                            </small>
+                        </p>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary">View Details</a>
+                        <a asp-action="Reserve" asp-route-id="@item.Id" class="btn btn-primary">Reserve</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="MyReservations" class="btn btn-outline-secondary">View My Reservations</a>
+    </div>
+</div> 
